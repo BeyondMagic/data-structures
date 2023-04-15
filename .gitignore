@@ -1,0 +1,4 @@
+.ccls-cache/
+binary
+compile_commands.json
+*.pdf

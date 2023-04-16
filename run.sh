@@ -16,8 +16,9 @@ function green () { echo "\033[32m$1\033[m" }
 
 function build ()
 {
-  bear -- make build -s
-  mv compile_commands.json "$last_dir"
+  # bear --
+  make build -s
+  #mv compile_commands.json "$last_dir"
 }
 
 case "$1" in

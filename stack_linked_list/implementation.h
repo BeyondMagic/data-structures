@@ -5,11 +5,9 @@
  * Functions and macros to be used in this implementation.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <assert.h>
 
 #define STACK_SIZE      sizeof(struct Stack)
 #define STACK_NODE_SIZE sizeof(struct StackNode)
@@ -53,7 +51,7 @@ struct Stack
  *   true if empty;
  *   false if not empty;
  */
-//[[nodiscard("Retuned boolean value must be used.")]]
+[[nodiscard("Retuned boolean value must be used.")]]
 bool stack_is_empty (const struct Stack *stack)
 {
   return !stack || !stack->head;
@@ -67,7 +65,7 @@ bool stack_is_empty (const struct Stack *stack)
  * @returns
  *   size_t size of stack.
  */
-//[[nodiscard("Returned size must be used.")]]
+[[nodiscard("Returned size must be used.")]]
 size_t stack_size (const struct Stack *stack)
 {
   if (!stack_is_empty(stack))
@@ -84,7 +82,7 @@ size_t stack_size (const struct Stack *stack)
  *   true if successful.
  *   false if faield.
  */
-//[[nodiscard("Returned boolean value must be used.")]]
+[[nodiscard("Returned boolean value must be used.")]]
 static bool stack_allocate (struct Stack *stack)
 {
   struct StackNode *temp = malloc(STACK_NODE_SIZE);
@@ -207,7 +205,7 @@ bool stack_push (struct Stack *stack, const void *data)
  *   NULL if failed;
  *   void pointer to stored data.
  */
-//[[nodiscard("Data value of top item in stack should be stored.")]]
+[[nodiscard("Data value of top item in stack should be stored.")]]
 void *stack_peek (const struct Stack *stack)
 {
   if (stack_is_empty(stack))

@@ -250,6 +250,8 @@ void stack_destroy (struct Stack *stack)
     free(next);
     stack->size--;
   }
+
+  free(stack);
 }
 
 /* Support for C++. */

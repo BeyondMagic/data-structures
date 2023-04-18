@@ -1,6 +1,17 @@
 #!/usr/bin/env zsh
 #
-# ???
+# @param string: run or r. Build the project.
+#   @param string: name of project in case being in root path.
+#     @param boolean: force move compile_commands.json
+#   @param boolean: force move compile_commands.json
+#
+# @param string: create or r
+#   @param string: name of project to be created.
+#   @param tests: quantity of tests to be used.
+#   @param language: C++ or C.
+#
+# @param string: test or t. Will show input and output of all tests.
+#   @param number: quantity of tests to run.
 #
 # Dependencies:
 #   fd
@@ -16,15 +27,15 @@ function green () { echo "\033[32m$1\033[m" }
 
 function build ()
 {
-  # bear --
-  make build -s
-  #mv compile_commands.json "$last_dir"
+  bear -- make build -s
+  compile_file='compile_commands.json'
+  if [[ ! -f "$last_dir/$compile_file" || $1 = 'true' ]]; then
+    mv compile_commands.json "$last_dir"
+  fi
 }
 
 case "$1" in
 
-  # Will build 
-  #  $2? Name of the project in case of root folder.
   'run' | 'r' )
 
     # If it the root folder.
@@ -39,21 +50,16 @@ case "$1" in
         exit 1
       fi
       export c="$(echo source.* | awk -F '[.]' '{print $NF}')"
-      n="$2" build
+      n="$2" build $3
     else
       last_dir="$PWD"
       export c="$(echo source.* | awk -F '[.]' '{print $NF}')"
       cd "../"
-      n="$(basename "$last_dir")" build
+      n="$(basename "$last_dir")" build $2
       cd "$last_dir"
     fi
   ;;
 
-  # To create a new folder for a problem.
-  # @parameters
-  #  $2 To create a new run of files.
-  #  $3 The quantity of problems.
-  #  $4 C++ or C. C++ by default.
   'create' | 'c' )
 
     # Verify if user's on the root path.
@@ -97,9 +103,6 @@ case "$1" in
 
   ;;
 
-  # Will show input and output of all tests.
-  # @parameters
-  #  $2 how many tests.
   'test' | 't' )
 
     # Discover the quantity of tests.
